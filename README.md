@@ -1,10 +1,9 @@
-DSA Practice 🚀
-📌 Solutions to a bunch of LeetCode problems as I solve them.
+# DSA Practice 🚀
 
-📂 Project Structure
-bash
-Copy
-Edit
+📌 *Solutions to a bunch of LeetCode problems as I solve them.*
+
+## 📂 Project Structure
+```
 dsa_practice/
 │── src/                 # Source code directory
 │   ├── Main.java        # Entry point (if needed)
@@ -12,26 +11,25 @@ dsa_practice/
 │── .idea/               # IntelliJ project settings
 │── dsa_practice.iml     # IntelliJ module file
 │── README.md            # This README file
-⚡ How to Run
-Open the project in IntelliJ IDEA.
+```
 
-Ensure the src folder is marked as Sources Root (Right-click → Mark Directory as → Sources Root).
+## ⚡ How to Run
+1. Open the project in **IntelliJ IDEA**.
+2. Ensure the `src` folder is marked as **Sources Root** (`Right-click → Mark Directory as → Sources Root`).
+3. Run the Java files directly from IntelliJ.
 
-Run the Java files directly from IntelliJ.
+## 📚 Topics Covered
+✅ Arrays  
+✅ Strings  
+✅ Linked Lists  
+✅ Trees & Graphs  
+✅ Dynamic Programming  
+✅ More as I progress!  
 
-📚 Topics Covered
-✅ Arrays
-✅ Strings
-✅ Linked Lists
-✅ Trees & Graphs
-✅ Dynamic Programming
-✅ More as I progress!
-
-📌 Notes
-Each solution is implemented in Java.
-
-Optimized approaches are preferred whenever possible.
-
-Some solutions include comments for better understanding.
+## 📌 Notes
+- Each solution is implemented in Java.
+- Optimized approaches are preferred whenever possible.
+- Some solutions include comments for better understanding.
 
 Stay tuned for more updates as I solve new problems! 🚀
+
