@@ -228,5 +228,48 @@ public class Intersection {
 
         return res;
     }
+    /**
+     * # Leetcode Problem #2248 Intersection of Multiple Arrays
+     *
+     * This method finds the intersection of multiple arrays. Specifically, it identifies the elements
+     * that are common in all input arrays and returns a list containing those elements, sorted in ascending order.
+     *
+     * Steps:
+     * 1. Initialize an array `input` to track the frequency of each element across all arrays.
+     * 2. Iterate through each array in `nums`:
+     *    - For each element in the array, increment its corresponding count in the `input` array.
+     * 3. After processing all arrays, iterate through the `input` array to identify elements whose count
+     *    equals the total number of arrays (i.e., those that appear in all arrays).
+     * 4. Add these common elements to the result list `res`.
+     * 5. Return the result list containing the intersection elements.
+     *
+     * Time Complexity: O(N * M)
+     *    - N = number of arrays, M = average length of arrays
+     *    - Iterating through all elements in all arrays to count occurrences: O(M * N)
+     *    - Collecting intersection elements by checking the frequency array: O(1) per element
+     *
+     * Space Complexity: O(N)
+     *    - The `input` array of size 1001 is used to track the frequency of elements, resulting in O(N) space.
+     *    - The result list `res` stores the intersection elements.
+     */
+    public static List<Integer> intersection_multiple_advanced(int[][] nums) {
+        List<Integer> res = new ArrayList<>();  // Result list to store intersection elements
+        int[] input = new int[1001];  // Array to count element occurrences (assuming input values are between 0 and 1000)
 
+        // Step 2: Count occurrences of elements across all arrays
+        for (int[] i : nums) {
+            for (int j : i) {
+                input[j]++;
+            }
+        }
+
+        // Step 3: Add elements that appear in all arrays to the result list
+        for (int k = 0; k < input.length; k++) {
+            if (input[k] == nums.length) {  // Element is common in all arrays
+                res.add(k);
+            }
+        }
+
+        return res;  // Return the list of intersection elements
+    }
 }
