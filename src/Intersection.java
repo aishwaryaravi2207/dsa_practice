@@ -9,6 +9,9 @@ public class Intersection {
         System.out.println(Arrays.toString(intersection_two(nums1, nums2)));
         System.out.println(findDifference(nums1,nums2));
         System.out.println((intersection_multiple(nums3)));
+        System.out.println(intersection_multiple_advanced(nums3));
+        System.out.println(findIntersectionValues(nums1,nums2));
+        System.out.println(findIntersectionValues_advanced(nums1,nums2));
     }
     /**
      * # Leetcode Problem #349: Intersection of Two Arrays 1
@@ -262,14 +265,109 @@ public class Intersection {
                 input[j]++;
             }
         }
-
         // Step 3: Add elements that appear in all arrays to the result list
         for (int k = 0; k < input.length; k++) {
             if (input[k] == nums.length) {  // Element is common in all arrays
                 res.add(k);
             }
         }
-
         return res;  // Return the list of intersection elements
     }
+    /**
+     * Leetcode Problem #2256 - Find Common Elements Between Two Arrays
+     *
+     * This method finds the common elements between two arrays and returns a list containing
+     * the counts of repeated elements between the two arrays.
+     *
+     * Steps:
+     * 1. Sort the first input array to facilitate duplicate detection.
+     * 2. Iterate through each element in the first array:
+     *    - If the element is the same as the previous one and was found in the second array,
+     *      increment the count without checking again.
+     *    - Otherwise, check for the presence of the element in the second array:
+     *      - If found, increment the count for unique occurrences in the first array.
+     *      - Count all occurrences in the second array.
+     *
+     * Time Complexity: O(N log N + N * M)
+     *    - Sorting nums1: O(N log N)
+     *    - Nested iteration over nums1 and nums2: O(N * M)
+     *
+     * Space Complexity: O(1)
+     *    - Only a fixed-size result array is used.
+     */
+        public static int[] findIntersectionValues(int[] nums1, int[] nums2) {
+            int[] res = new int[2];
+            Arrays.sort(nums1); // Sort nums1 to handle duplicate detection
+            int prev = Integer.MIN_VALUE;
+            boolean isPresent = false;
+
+            for (int i : nums1) {
+                if (i == prev && isPresent) {
+                    res[0]++; // Increment count for repeated elements in nums1
+                    continue;
+                }
+                isPresent = false;
+                int countInNums2 = 0;
+
+                for (int j : nums2) {
+                    if (i == j) {
+                        isPresent = true;
+                        countInNums2++;
+                    }
+                }
+
+                if (isPresent) {
+                    res[0]++; // Unique occurrence in nums1 found in nums2
+                    res[1] += countInNums2; // Total occurrences in nums2
+                }
+
+                prev = i;
+            }
+            return res;
+        }
+    /**
+     * Leetcode Problem #2256 - Find Common Elements Between Two Arrays
+     *
+     * This method finds the common elements between two arrays and returns a list containing
+     * the counts of repeated elements between the two arrays.
+     *
+     * Steps:
+     * 1. Use a HashMap to store the frequency of elements in the first array.
+     * 2. Iterate through the second array:
+     *    - If an element exists in the HashMap:
+     *      - If it has a nonzero count, add its count to the result and set its count to zero.
+     *      - Increment the second result count for every occurrence in the second array.
+     *
+     * Time Complexity: O(N + M)
+     *    - Building the HashMap: O(N)
+     *    - Iterating through nums2: O(M)
+     *
+     * Space Complexity: O(N)
+     *    - A HashMap is used to store counts of elements in nums1.
+     */
+    public static int[] findIntersectionValues_advanced(int[] nums1, int[] nums2) {
+        int[] res = new int[2];
+        Map<Integer, Integer> map = new HashMap<>();
+
+        // Populate HashMap with frequencies of nums1
+        for (int i : nums1) {
+            map.put(i, map.getOrDefault(i, 0) + 1);
+        }
+
+        // Process nums2 to count intersections
+        for (int j : nums2) {
+            if (map.containsKey(j)) {
+                if (map.get(j) > 0) {
+                    res[0] += map.get(j); // Count occurrences from nums1
+                    map.put(j, 0); // Mark as counted to avoid duplication
+                    res[1]++; // Increment unique intersection count
+                } else {
+                    res[1]++; // Increment intersection count for duplicates in nums2
+                }
+            }
+        }
+        return res;
+    }
+}
+
 }
