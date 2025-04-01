@@ -369,5 +369,3 @@ public class Intersection {
         return res;
     }
 }
-
-}
