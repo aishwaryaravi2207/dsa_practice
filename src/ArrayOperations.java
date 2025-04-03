@@ -74,4 +74,8 @@ public class ArrayOperations {
         return count;
     }
 
+    public static int distinctIntegers(int n) {
+        return Math.max(n-1,1);
+    }
+
 }
