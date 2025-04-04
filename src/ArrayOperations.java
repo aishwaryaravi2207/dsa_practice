@@ -7,9 +7,11 @@ public class ArrayOperations {
     public static void main(String[] args){
         int[] nums = {2,3,1,3,2,4,6,7,9,2,19};
         int[] input = {2,1,4,3,9,6};
+        int[] nums2 = {6,2};
 //        System.out.println(runningSum(nums));
 //        System.out.println(countHillValley(input));
-        System.out.println(relativeSortArray(nums,input).toString());
+//        System.out.println(relativeSortArray(nums,input).toString());
+        System.out.println(arrayPairSum(nums2));
     }
     /**
      * Leetcode Problem #1480: Running Sum of 1D Array
@@ -128,5 +130,13 @@ public class ArrayOperations {
         }
 
         return arr1;
+    }
+    public static int arrayPairSum(int[] nums) {
+        Arrays.sort(nums);
+        int sum = 0;
+        for(int i = 0; i < nums.length; i += 2){
+            sum += nums[i];
+        }
+        return sum;
     }
 }
