@@ -1,16 +1,13 @@
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class ArrayOperations {
     public static void main(String[] args){
         int[] nums = {2,3,1,3,2,4,6,7,9,2,19};
         int[] input = {2,1,4,3,9,6};
         int[] nums2 = {6,2};
-//        System.out.println(runningSum(nums));
-//        System.out.println(countHillValley(input));
-//        System.out.println(relativeSortArray(nums,input).toString());
+        System.out.println(runningSum(nums));
+        System.out.println(countHillValley(input));
+        System.out.println(relativeSortArray(nums,input).toString());
         System.out.println(arrayPairSum(nums2));
     }
     /**
@@ -131,10 +128,29 @@ public class ArrayOperations {
 
         return arr1;
     }
+    /**
+     * Leetcode Problem #561: Array Partition I
+     *
+     * Given an array of 2n integers, this method forms n pairs such that the sum
+     * of the minimum value in each pair is maximized.
+     *
+     * Approach:
+     * 1. Sort the input array in ascending order.
+     * 2. Iterate through the array in steps of 2, summing up elements at even indices (which are the smaller elements in each pair).
+     *
+     * Time Complexity: O(N log N)
+     *    - Due to the sorting step.
+     *
+     * Space Complexity: O(1)
+     *    - Sorting is done in-place (assuming the underlying sort implementation is in-place), and only a constant amount of extra space is used.
+     *
+     * @param nums Input array of 2n integers.
+     * @return The maximum sum of the minimum values from n pairs.
+     */
     public static int arrayPairSum(int[] nums) {
         Arrays.sort(nums);
         int sum = 0;
-        for(int i = 0; i < nums.length; i += 2){
+        for (int i = 0; i < nums.length; i += 2) {
             sum += nums[i];
         }
         return sum;
