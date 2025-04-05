@@ -9,6 +9,7 @@ public class ArrayOperations {
         System.out.println(countHillValley(input));
         System.out.println(relativeSortArray(nums,input).toString());
         System.out.println(arrayPairSum(nums2));
+        System.out.println(sortArrayByParity(nums));
     }
     /**
      * Leetcode Problem #1480: Running Sum of 1D Array
@@ -154,5 +155,44 @@ public class ArrayOperations {
             sum += nums[i];
         }
         return sum;
+    }
+    /**
+     * Leetcode Problem #905: Sort Array By Parity
+     *
+     * Rearranges the input array so that all even numbers appear before all odd numbers.
+     * The relative order of even and odd numbers is not preserved.
+     *
+     * Approach:
+     * 1. Create a result array of the same length as the input array.
+     * 2. Use two pointers:
+     *    - One (`j`) starting from the beginning to place even numbers.
+     *    - One (`k`) starting from the end to place odd numbers.
+     * 3. Iterate through the input array:
+     *    - If the current element is even, place it at index `j` and increment `j`.
+     *    - If the current element is odd, place it at index `k` and decrement `k`.
+     *
+     * Time Complexity: O(N)
+     *    - Single pass through the input array of length N.
+     *
+     * Space Complexity: O(N)
+     *    - Additional array of size N is used to store the result.
+     *
+     * @param nums Input array of integers.
+     * @return A new array with even elements first, followed by odd elements.
+     */
+    public static int[] sortArrayByParity(int[] nums) {
+        int[] res = new int[nums.length];
+        int j = 0;
+        int k = res.length - 1;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] % 2 == 0) {
+                res[j] = nums[i];
+                j++;
+            } else {
+                res[k] = nums[i];
+                k--;
+            }
+        }
+        return res;
     }
 }
