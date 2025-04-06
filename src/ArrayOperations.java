@@ -10,6 +10,7 @@ public class ArrayOperations {
         System.out.println(relativeSortArray(nums,input).toString());
         System.out.println(arrayPairSum(nums2));
         System.out.println(sortArrayByParity(nums));
+        System.out.println(sortArrayByParityII(nums));
     }
     /**
      * Leetcode Problem #1480: Running Sum of 1D Array
@@ -195,6 +196,30 @@ public class ArrayOperations {
         }
         return res;
     }
+    /**
+     * Leetcode Problem #922: Sort Array By Parity II
+     *
+     * Rearranges the input array such that elements at even indices are even,
+     * and elements at odd indices are odd.
+     *
+     * Approach:
+     * 1. Initialize a result array of the same length as the input.
+     * 2. Use two pointers:
+     *    - `i` starts at index 0 to place even numbers.
+     *    - `j` starts at index 1 to place odd numbers.
+     * 3. Iterate through each element in the input array:
+     *    - If the element is even, place it at index `i` and increment `i` by 2.
+     *    - If the element is odd, place it at index `j` and increment `j` by 2.
+     *
+     * Time Complexity: O(N)
+     *    - Each element is visited once, where N is the length of the array.
+     *
+     * Space Complexity: O(N)
+     *    - An additional array of size N is used for the result.
+     *
+     * @param nums Input array of integers (with equal number of even and odd elements).
+     * @return A new array where even numbers occupy even indices and odd numbers occupy odd indices.
+     */
     public static int[] sortArrayByParityII(int[] nums) {
         int i = 0;
         int j = 1;

@@ -50,12 +50,6 @@ public class DynamicProgramming {
                 dp[i] = -1;
             }
         }
-
-        // Optional: print DP array (can be removed in production)
-        for (int k : dp) {
-            System.out.println(k);
-        }
-
         return dp[amount];
     }
 
