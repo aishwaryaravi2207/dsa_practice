@@ -1,7 +1,9 @@
 public class StringOperations {
     public static void main(String[] args){
         String s = "AALLPP";
-        System.out.println(checkRecord(s));
+//        System.out.println(checkRecord(s));
+        String input = "030";
+        System.out.println(digitCount(input));
     }
     /**
      * Leetcode Problem #551: Student Attendance Record I
@@ -47,5 +49,44 @@ public class StringOperations {
         }
         return true;
     }
-
+    /**
+     * Leetcode Problem #2283: Check if Number Has Equal Digit Count and Digit Value
+     *
+     * This method checks whether a student is eligible for an attendance award based on their record.
+     * A student is ineligible if:
+     *   - They have been absent ('A') more than once, or
+     *   - They have been late ('L') for 3 or more consecutive days.
+     *
+     * Approach:
+     * 1. Iterate through the attendance record string.
+     * 2. Use two counters: one for tracking total absences, and another for consecutive late days.
+     * 3. Reset the late counter if the current character is not 'L'.
+     * 4. If absences exceed 1 or if the late counter reaches 3, return false.
+     * 5. If no violations are found, return true.
+     *
+     * Time Complexity: O(N)
+     *    - The string is traversed once.
+     *
+     * Space Complexity: O(1)
+     *    - Only a constant amount of space is used for counters.
+     *
+     * @param s Attendance record as a string consisting of characters 'A', 'L', and 'P'.
+     * @return True if the student is eligible for the award; otherwise, false.
+     */
+    public static boolean digitCount(String num) {
+        int[] check = new int[num.length() + 1];
+        int[] res = new int[10];
+        for(int i = 0 ; i < num.length(); i++){
+            check[i] = num.charAt(i) - '0';
+            res[num.charAt(i)-'0']++;
+        }
+        int k = 0;
+        while(k < check.length){
+            if(check[k] != res[k]){
+                return false;
+            }
+            k++;
+        }
+        return true;
+    }
 }
