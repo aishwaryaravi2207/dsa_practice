@@ -1,10 +1,17 @@
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ArrayOperations {
     public static void main(String[] args){
         int[] nums = {2,3,1,3,2,4,6,7,9,2,19};
         int[] input = {2,1,4,3,9,6};
         int[] nums2 = {6,2};
+        int[] nums3 = {0,1,2,3,4};
+        int[] index = {0,1,2,2,1};
+        for(int temp : createTargetArray(nums3,index)){
+            System.out.println(temp);
+        }
         System.out.println(runningSum(nums));
         System.out.println(countHillValley(input));
         System.out.println(relativeSortArray(nums,input).toString());
@@ -232,6 +239,55 @@ public class ArrayOperations {
             }
             res[j] = nums[k];
             j += 2;
+        }
+        return res;
+    }
+    /**
+     * Leetcode Problem #1389: Create Target Array in the Given Order
+     *
+     * Problem Description:
+     * Given two arrays, `nums` and `index`, insert each element from `nums` into a new array at the position
+     * specified by the corresponding element in `index`. If an index position is already occupied,
+     * shift existing elements one position to the right to make space.
+     *
+     * Approach:
+     * 1. Use a HashMap to track if an index has already been used.
+     * 2. Iterate through the `index` array:
+     *    a. If the current index is not present in the map, mark it as used.
+     *    b. If the index already exists:
+     *       - Iterate from the beginning of the `index` array up to the current position.
+     *       - For each earlier index greater than or equal to the current one, increment it by 1
+     *         to simulate shifting elements to the right.
+     * 3. Construct the final result array by placing elements from `nums` at the updated indices.
+     *
+     * Time Complexity: O(N^2)
+     *    - For every duplicate index, the loop may shift multiple earlier entries.
+     *
+     * Space Complexity: O(N)
+     *    - A HashMap is used to track used indices, and an array of size N is created for the result.
+     *
+     * @param nums  Input array of integers to insert.
+     * @param index Array representing the target indices for insertion.
+     * @return      An array representing the final ordering after all insertions.
+     */
+
+    public static int[] createTargetArray(int[] nums, int[] index) {
+        int[] res = new int[nums.length];
+        Map<Integer,Boolean> map = new HashMap<>();
+        for(int i = 0; i < index.length; i++){
+            if(!map.containsKey(index[i])){
+                map.put(index[i],true);
+            }
+            else{
+                for(int j = 0; j < i; j++){
+                    if(index[j] >= index[i]){
+                        map.put(++index[j],true);
+                    }
+                }
+            }
+        }
+        for(int k : index){
+            res[index[k]] = nums[k];
         }
         return res;
     }
