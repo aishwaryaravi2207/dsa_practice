@@ -1,24 +1,28 @@
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ArrayOperations {
     public static void main(String[] args){
-        int[] nums = {2,3,1,3,2,4,6,7,9,2,19};
-        int[] input = {2,1,4,3,9,6};
-        int[] nums2 = {6,2};
-        int[] nums3 = {0,1,2,3,4};
-        int[] index = {0,1,2,2,1};
-        for(int temp : createTargetArray(nums3,index)){
-            System.out.println(temp);
-        }
-        System.out.println(runningSum(nums));
-        System.out.println(countHillValley(input));
-        System.out.println(relativeSortArray(nums,input).toString());
-        System.out.println(arrayPairSum(nums2));
-        System.out.println(sortArrayByParity(nums));
-        System.out.println(sortArrayByParityII(nums));
-        System.out.println(repeatedNTimes(nums));
+//        int[] nums = {2,3,1,3,2,4,6,7,9,2,19};
+//        int[] input = {2,1,4,3,9,6};
+//        int[] nums2 = {6,2};
+//        int[] nums3 = {0,1,2,3,4};
+//        int[] index = {0,1,2,2,1};
+//        int[] num4 = { 40, 30, 20, 10};
+//        int[] num5 = {4,5,6,4,4};
+        int[] num6 = {4,3,2,1};
+//        System.out.println(minimumOperations(num5));
+//        for(int temp : createTargetArray(nums3,index)){
+//            System.out.println(temp);
+//        }
+//        System.out.println(runningSum(nums));
+//        System.out.println(countHillValley(input));
+//        System.out.println(relativeSortArray(nums,input).toString());
+//        System.out.println(arrayPairSum(nums2));
+//        System.out.println(sortArrayByParity(nums));
+//        System.out.println(sortArrayByParityII(nums));
+//        System.out.println(repeatedNTimes(nums));
+//        System.out.println(arrayRankTransform(num4));
+        System.out.println(transformArray(num6));
     }
     /**
      * Leetcode Problem #1480: Running Sum of 1D Array
@@ -327,5 +331,58 @@ public class ArrayOperations {
             }
         }
         return -1;
+    }
+    public static int[] arrayRankTransform(int[] arr) {
+        int[] copy = Arrays.copyOf(arr, arr.length);
+        Map<Integer,Integer> map = new HashMap<>();
+        Arrays.sort(copy);
+        for(int i = 0; i < arr.length; i++){
+            if(!map.containsKey(arr[i])){
+                map.put(arr[i],i+1);
+            }
+        }
+        for(int j = 0; j < arr.length; j++){
+            arr[j] = map.get(arr[j]);
+        }
+        return arr;
+    }
+    public static int minimumOperations(int[] nums) {
+        Map<Integer,Integer> map = new HashMap<>();
+        for(int i = nums.length-1; i >= 0; i--){
+            if(!map.containsKey(nums[i])){
+                map.put(nums[i],1);
+            }
+            else{
+                double pos = i+1;
+                double ops  = Math.ceil((pos) / 3);
+                return (int) ops;
+            }
+        }
+        return 0;
+    }
+    public static int[] getConcatenation(int[] nums) {
+        int j = nums.length;
+        int[] res = new int[nums.length*2];
+        for(int i = 0; i < res.length; i++){
+            res[i] = nums[i];
+            res[j] = nums[i];
+            j++;
+        }
+        return res;
+    }
+    public static int[] transformArray(int[] nums) {
+        Arrays.sort(nums);
+        int[] res = new int[nums.length];
+        int j = nums.length-1;
+        for (int i = 0; i < nums.length; i++){
+            if(nums[i] % 2 != 0){
+                res[j] = 1;
+                j--;
+            }
+        }
+        return res;
+    }
+    public int addedInteger(int[] nums1, int[] nums2) {
+
     }
 }
