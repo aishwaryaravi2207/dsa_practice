@@ -18,6 +18,7 @@ public class ArrayOperations {
         System.out.println(arrayPairSum(nums2));
         System.out.println(sortArrayByParity(nums));
         System.out.println(sortArrayByParityII(nums));
+        System.out.println(repeatedNTimes(nums));
     }
     /**
      * Leetcode Problem #1480: Running Sum of 1D Array
@@ -290,5 +291,41 @@ public class ArrayOperations {
             res[index[k]] = nums[k];
         }
         return res;
+    }
+    /**
+     * Leetcode Problem #961: N-Repeated Element in Size 2N Array
+     *
+     * Problem Description:
+     * Given an array `nums` of size 2N, where there are N+1 unique elements and one of these elements is repeated N times,
+     * return the element that is repeated N times.
+     *
+     * Approach:
+     * 1. Create an integer array `res` of size 10000 to count occurrences of each element (assuming input range is within 0–9999).
+     * 2. Iterate through `nums`, incrementing the count at index `nums[i]`.
+     * 3. Iterate through `nums` again and return the element whose count equals `N`.
+     * 4. Return -1 only if no such element is found (though this should not happen based on problem constraints).
+     *
+     * Time Complexity: O(N)
+     *    - Single pass through the input array to count occurrences.
+     *    - Another pass through the input array to find the repeated element.
+     *
+     * Space Complexity: O(1)
+     *    - Fixed-size auxiliary array used for counting (10000 elements), independent of input size.
+     *
+     * @param nums Input array of integers of size 2N.
+     * @return     The element that is repeated N times.
+     */
+    public static int repeatedNTimes(int[] nums) {
+        int[] res = new int[10000];
+        int len = nums.length / 2;
+        for (int i = 0; i < nums.length; i++) {
+            res[nums[i]]++;
+        }
+        for (int j : res) {
+            if (j == len) {
+                return j;
+            }
+        }
+        return -1;
     }
 }
