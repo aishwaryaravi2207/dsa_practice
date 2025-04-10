@@ -9,7 +9,11 @@ public class ArrayOperations {
 //        int[] index = {0,1,2,2,1};
 //        int[] num4 = { 40, 30, 20, 10};
 //        int[] num5 = {4,5,6,4,4};
-        int[] num6 = {4,3,2,1};
+//        int[] num6 = {4,3,2,1};
+//        int[] num7 = {6,8,4,5,5,7,3};
+//        int[] num8 = {46,49,46,47,48,45,44};
+        int[][] mum9 = {{1950,1961},{1960,1971},{1970,1981}};
+        System.out.println(maximumPopulation(mum9));
 //        System.out.println(minimumOperations(num5));
 //        for(int temp : createTargetArray(nums3,index)){
 //            System.out.println(temp);
@@ -22,7 +26,8 @@ public class ArrayOperations {
 //        System.out.println(sortArrayByParityII(nums));
 //        System.out.println(repeatedNTimes(nums));
 //        System.out.println(arrayRankTransform(num4));
-        System.out.println(transformArray(num6));
+//        System.out.println(transformArray(num6));
+//        System.out.println(addedInteger(num7,num8));
     }
     /**
      * Leetcode Problem #1480: Running Sum of 1D Array
@@ -382,7 +387,51 @@ public class ArrayOperations {
         }
         return res;
     }
-    public int addedInteger(int[] nums1, int[] nums2) {
-
+    public static int addedInteger(int[] nums1, int[] nums2) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int k : nums2) {
+            int val = k - nums1[0];
+            map.put(val, 1);
+        }
+        for(Map.Entry<Integer,Integer> entry : map.entrySet()){
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+        for(int i = 1; i < nums1.length; i++){
+            for(int j = 0; j < nums2.length; j++){
+                int val = nums2[j] - nums1[i];
+                if(map.containsKey(val) && map.get(val) == i){
+                    map.put(val,map.get(val) + 1);
+                }
+            }
+        }
+        System.out.println("*********");
+        for(Map.Entry<Integer,Integer> entry : map.entrySet()){
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+        System.out.println("*********");
+        int max = Integer.MIN_VALUE;
+        for(Map.Entry<Integer,Integer> entry: map.entrySet()){
+            if(entry.getValue() >= nums1.length){
+                max = Math.max(max, entry.getKey());
+            }
+        }
+        return max;
+    }
+    public static int maximumPopulation(int[][] logs) {
+        int[] pop = new int[2051];
+        for(int i = 0; i < logs.length; i++){
+            pop[logs[i][0]]++;
+            pop[logs[i][1]]--;
+        }
+        int max = pop[1950];
+        int res = 1950;
+        for(int j = 1951; j < 2051; j++){
+            pop[j] += pop[j-1];
+            if(max < pop[j]){
+                max = pop[j];
+                res = j;
+            }
+        }
+        return res;
     }
 }
