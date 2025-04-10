@@ -89,4 +89,35 @@ public class StringOperations {
         }
         return true;
     }
+    /**
+     * Leetcode Problem #2544. Alternating Digit Sum
+     *
+     * This method returns the sum of all the digits, every odd digit should be considered as a negative number
+     *
+     * Approach:
+     * 1. Store the input number as a String
+     * 2. Iterate through each character and convert into int and add it to the sum directly if its present in an even index
+     * 3. Multiply it with -1 and sum it if it is an odd number
+     *
+     * Time Complexity: O(N)
+     *    - The string is traversed once.
+     *
+     * Space Complexity: O(1)
+     *    - Only a constant amount of space is used for counters.
+     *
+     * @param s Attendance record as a string consisting of characters 'A', 'L', and 'P'.
+     * @return True if the student is eligible for the award; otherwise, false.
+     */
+    public static int alternateDigitSum(int n) {
+        String temp = String.valueOf(n);
+        int sum  = 0;
+        for(int i = 0; i < temp.length(); i++){
+            int num = temp.charAt(i) - '0';
+            if(i % 2 != 0){
+                num *= -1;
+            }
+            sum += num;
+        }
+        return sum;
+    }
 }
