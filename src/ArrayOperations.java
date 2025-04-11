@@ -722,6 +722,153 @@ public class ArrayOperations {
         }
         return res;
     }
+    /**
+     * Leetcode Problem #1848: Minimum Distance to the Target Element
+     *
+     * Problem Description:
+     * Given an integer array `nums`, a target value, and a starting index,
+     * return the minimum distance between the starting index and any index `i`
+     * such that `nums[i] == target`. The distance is calculated as `abs(i - start)`.
+     *
+     * Approach:
+     * 1. Iterate through the array.
+     * 2. For each index `i` where `nums[i] == target`, compute the absolute
+     *    distance from `start`.
+     * 3. Track the minimum of these distances using a variable `pos`.
+     *
+     * Time Complexity: O(N)
+     *    - We traverse the entire array once to check for matches with the target.
+     *
+     * Space Complexity: O(1)
+     *    - Only a constant amount of extra space is used to store the result.
+     *
+     * @param nums   Input array of integers
+     * @param target The target value to find in the array
+     * @param start  The starting index from which distance is calculated
+     * @return       The minimum distance between start and any index with target value
+     */
+    public static int getMinDistance(int[] nums, int target, int start) {
+        int pos = 1001;
+        for(int i  = 0; i < nums.length; i++){
+            if(nums[i] == target){
+                pos = Math.min(pos, Math.abs(i - start));
+            }
+        }
+        return pos;
+    }
+    /**
+     * Leetcode Problem #1848: Minimum Distance to the Target Element
+     *
+     * Problem Description:
+     * Given an integer array `nums`, a target value, and a starting index `start`,
+     * return the minimum distance between `start` and any index `i` such that
+     * `nums[i] == target`. The distance is calculated as `abs(i - start)`.
+     *
+     * Approach:
+     * - Use a two-pointer technique:
+     *   1. Initialize two pointers `i` and `j` at `start`.
+     *   2. Expand outward in both directions simultaneously.
+     *   3. At each step, check if either `nums[i]` or `nums[j]` equals the target.
+     *   4. If found, return the current distance counter as the minimum distance.
+     *   5. Continue expanding until the bounds of the array are exceeded.
+     *
+     * This approach finds the closest occurrence of the target in minimal steps.
+     *
+     * Time Complexity: O(N)
+     *    - In the worst case, we might have to scan the entire array.
+     *    - However, in practice, it may return early upon finding the closest target.
+     *
+     * Space Complexity: O(1)
+     *    - Only a constant amount of space is used for pointers and counters.
+     *
+     * @param nums   Input array of integers
+     * @param target The target value to search for in the array
+     * @param start  The starting index from which distance is measured
+     * @return       The minimum distance to an index where the value equals the target
+     */
+    public static int getMinDistance_advanced(int[] nums, int target, int start) {
+        int i = start, j = start;
+        int pos = 1001;
+        int counter = 0;
+        while(i > -1 || j < nums.length){
+            if(i > -1 && nums[i] == target){
+                return counter;
+            }
+            else if(j < nums.length && nums[j] == target){
+                return counter;
+            }
+            counter++;
+            i--;
+            j++;
+        }
+        return pos;
+    }
+    /**
+     * Leetcode Problem #2161: Partition Array According to Given Pivot
+     *
+     * Problem Description:
+     * Given an integer array `nums` and a pivot value, rearrange the elements in the array such that:
+     * - All elements less than the pivot appear before elements equal to the pivot.
+     * - All elements equal to the pivot appear in the middle.
+     * - All elements greater than the pivot appear after the pivot elements.
+     * The relative order of elements in each group should be preserved.
+     *
+     * Approach:
+     * 1. Initialize a result array `res` of the same length as the input.
+     * 2. Use a list `list2` to store elements greater than the pivot.
+     * 3. Maintain two counters:
+     *    - `equalCount`: to count occurrences of the pivot.
+     *    - `pos`: to track the current index in the result array.
+     * 4. Iterate through the input array:
+     *    - If an element is less than the pivot, insert it into `res` and increment `pos`.
+     *    - If it is equal to the pivot, increment `equalCount`.
+     *    - If it is greater, add it to `list2`.
+     * 5. After the loop, insert the pivot value `equalCount` times into the result array.
+     * 6. Append all elements from `list2` to the result array.
+     *
+     * Time Complexity: O(N)
+     *    - One pass to process the array and one pass to fill the result array.
+     *
+     * Space Complexity: O(N)
+     *    - Extra space used for the result array and the list of elements greater than the pivot.
+     *
+     * @param nums  Input array of integers
+     * @param pivot Pivot value to partition around
+     * @return      New array with elements partitioned around the pivot
+     */
+    public static int[] pivotArray(int[] nums, int pivot) {
+        int[] res = new int[nums.length];
+        List<Integer> list2 = new ArrayList<>();
+        int equalCount = 0;
+        int pos = 0;
+        for(int  i = 0; i < nums.length; i++){
+            if(pivot > nums[i]){
+                res[pos] = nums[i];
+                pos++;
+            }
+            else if(pivot == nums[i]){
+                equalCount++;
+            }
+            else{
+                list2.add(nums[i]);
+            }
+        }
+        while(pos < res.length){
+            int pt = 0;
+            while(equalCount > 0){
+                res[pos] = pivot;
+                pos++;
+                equalCount--;
+            }
+            pt = 0;
+            while(pt < list2.size()){
+                res[pos] = list2.get(pt);
+                pt++;
+                pos++;
+            }
+        }
+        return res;
+    }
 }
 
 
