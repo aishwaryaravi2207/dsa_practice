@@ -126,4 +126,32 @@ public class StringOperations {
         }
         return sum;
     }
+    public  static boolean checkZeroOnes(String s) {
+        int count_zero = 0, count_one = 0, max_zero = 0 , max_one = 0;
+        for(int i = 0; i < s.length(); i++){
+            if(s.charAt(i) == '0'){
+                max_zero = Math.max(max_zero,++count_zero);
+                count_one = 0;
+            }
+            else if(s.charAt(i) == '1') {
+                max_one = Math.max(max_one,++count_one);
+                count_zero = 0;
+            }
+        }
+        return max_one > max_zero;
+    }
+    public static String thousandSeparator(int n) {
+        String temp = String.valueOf(n);
+        String res = "";
+        int counter = 1;
+        for(int i = temp.length() - 1; i > 0; i--){
+            if(counter % 3 == 0){
+                res = "." +  temp.charAt(i) + res;
+                continue;
+            }
+            res = temp.charAt(i) + res;
+            counter++;
+        }
+        return temp.charAt(0) + res;
+    }
 }

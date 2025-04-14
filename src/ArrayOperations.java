@@ -869,6 +869,41 @@ public class ArrayOperations {
         }
         return res;
     }
+    public static int[] pivotArray_advanced(int[] nums, int pivot) {
+        for(int i = 0; i < nums.length-1; i++){
+            if(nums[i] < pivot){
+                continue;
+            }
+            for(int j = i+1; j < nums.length; j++){
+                if(nums[j] < pivot && nums[j] < nums[i]){
+                    int temp = nums[i];
+                    nums[i] = nums[j];
+                    nums[j] = temp;
+                }
+            }
+        }
+        return nums;
+    }
+    public static int countGoodTriplets(int[] arr, int a, int b, int c) {
+        int count = 0;
+        for(int i = 0; i < arr.length-2; i++){
+            for(int j = i + 1; j < arr.length-1; j++){
+                if((Math.abs(arr[i] - arr[j]) > a)){
+                    continue;
+                }
+                for(int k = j + 1; k < arr.length; k++){
+                    if((Math.abs(arr[j] - arr[k]) > b)){
+                        continue;
+                    }
+                    if(Math.abs(arr[i] - arr[k]) > c){
+                        continue;
+                    }
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
 }
 
 
