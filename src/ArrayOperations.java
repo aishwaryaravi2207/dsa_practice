@@ -15,6 +15,8 @@ public class ArrayOperations {
         int[][] mum9 = {{1950,1961},{1960,1971},{1970,1981}};
         int[] num10 = {-1,1,-6,4,5,-6,1,4,1};
         int[] num11 = {2,2,2,3,1,1};
+        int[] nums12 = {4,4,2,4,3};
+        System.out.println(unequalTriplets_advanced(nums12));
         System.out.println(frequencySort_advanced(num11));
         System.out.println(maximumPopulation(mum9));
         System.out.println(frequencySort(num10));
@@ -27,7 +29,7 @@ public class ArrayOperations {
         System.out.println(relativeSortArray(nums,input).toString());
         System.out.println(arrayPairSum(nums2));
         System.out.println(sortArrayByParity(nums));
-        System.out.println(sortArrayByParityII(nums));
+        System.out.println(sortArrayByParityII(num11));
         System.out.println(repeatedNTimes(nums));
         System.out.println(arrayRankTransform(num4));
         System.out.println(transformArray(num6));
@@ -879,11 +881,42 @@ public class ArrayOperations {
                     int temp = nums[i];
                     nums[i] = nums[j];
                     nums[j] = temp;
+                    continue;
                 }
+                //write logic for element greater than and equal to pivot
             }
         }
         return nums;
     }
+    /**
+     * Leetcode Problem #1534: Count Good Triplets
+     *
+     * Problem Description:
+     * Given an integer array `arr`, and three integers `a`, `b`, and `c`,
+     * return the number of good triplets. A triplet (i, j, k) is good if:
+     *  - 0 <= i < j < k < arr.length
+     *  - |arr[i] - arr[j]| <= a
+     *  - |arr[j] - arr[k]| <= b
+     *  - |arr[i] - arr[k]| <= c
+     *
+     * Approach:
+     * 1. Use three nested loops to iterate over all possible triplets (i, j, k) such that i < j < k.
+     * 2. For each triplet, check if all three absolute difference conditions are satisfied.
+     * 3. If they are, increment the count of good triplets.
+     * 4. Return the final count.
+     *
+     * Time Complexity: O(N^3)
+     *    - Three nested loops over the array of length N.
+     *
+     * Space Complexity: O(1)
+     *    - Uses a constant amount of extra space for the counter.
+     *
+     * @param arr Input array of integers
+     * @param a   Maximum allowed absolute difference between arr[i] and arr[j]
+     * @param b   Maximum allowed absolute difference between arr[j] and arr[k]
+     * @param c   Maximum allowed absolute difference between arr[i] and arr[k]
+     * @return    The number of good triplets in the array
+     */
     public static int countGoodTriplets(int[] arr, int a, int b, int c) {
         int count = 0;
         for(int i = 0; i < arr.length-2; i++){
@@ -903,6 +936,136 @@ public class ArrayOperations {
             }
         }
         return count;
+    }
+    /**
+     * Leetcode Problem #1995: Count Special Quadruplets
+     *
+     * Problem Description:
+     * Given an integer array `nums`, return the number of **special quadruplets** (i, j, k, l)
+     * such that:
+     *  - 0 <= i < j < k < l < nums.length
+     *  - nums[i] + nums[j] + nums[k] == nums[l]
+     *
+     * Approach:
+     * 1. Use four nested loops to iterate over all combinations of indices (i, j, k, l) such that i < j < k < l.
+     * 2. For each quadruplet, check if the sum of nums[i], nums[j], and nums[k] equals nums[l].
+     * 3. If the condition is met, increment the counter.
+     * 4. Return the final count after all combinations are checked.
+     *
+     * Time Complexity: O(N^4)
+     *    - Four nested loops over the array of length N.
+     *
+     * Space Complexity: O(1)
+     *    - Only a constant amount of space is used for the counter variable.
+     *
+     * @param nums Input array of integers
+     * @return     The number of special quadruplets satisfying the given condition
+     */
+    public int countQuadruplets(int[] nums) {
+        int count = 0;
+        for(int i = 0; i < nums.length-3; i++){
+            for(int j = i+1; j < nums.length-2; j++){
+                for(int k = j+1; k < nums.length-1; k++){
+                    for(int l = k+1; l < nums.length; l++){
+                        if(nums[i] + nums[j] + nums[k] == nums[l]){
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+        return count;
+    }
+    /**
+     * Leetcode Problem #2475: Count Special Quadruplets
+     *
+     * Problem Description:
+     * Given an integer array `nums`, return the number of **special quadruplets** (i, j, k, l)
+     * such that:
+     *  - 0 <= i < j < k < l < nums.length
+     *  - nums[i] + nums[j] + nums[k] == nums[l]
+     *
+     * Approach:
+     * 1. Use four nested loops to iterate over all combinations of indices (i, j, k, l) such that i < j < k < l.
+     * 2. For each quadruplet, check if the sum of nums[i], nums[j], and nums[k] equals nums[l].
+     * 3. If the condition is met, increment the counter.
+     * 4. Return the final count after all combinations are checked.
+     *
+     * Time Complexity: O(N^4)
+     *    - Four nested loops over the array of length N.
+     *
+     * Space Complexity: O(1)
+     *    - Only a constant amount of space is used for the counter variable.
+     *
+     * @param nums Input array of integers
+     * @return     The number of special quadruplets satisfying the given condition
+     */
+
+    public static int unequalTriplets(int[] nums) {
+        int count = 0;
+        for(int i = 0; i < nums.length - 2; i++){
+            for(int j = i+1; j < nums.length - 1; j++){
+                if(nums[i] == nums[j]){
+                    continue;
+                }
+                for (int k = j+1; k < nums.length; k++){
+                    if(nums[i] == nums[k] || nums[j] == nums[k]){
+                        continue;
+                    }
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+    /**
+     * Leetcode Problem #2475: Number of Unequal Triplets in an Array
+     *
+     * Problem Description:
+     * Given an array of positive integers `nums`, return the number of triplets (i, j, k)
+     * such that:
+     *   - 0 <= i < j < k < nums.length
+     *   - nums[i], nums[j], and nums[k] are pairwise distinct
+     *
+     * Optimized Approach:
+     * 1. Use a HashMap to count the frequency of each unique number in the array.
+     * 2. Iterate over the unique values in sorted order (via map entries):
+     *    - For each unique number, calculate how many values are on its left and right.
+     *    - Compute the number of triplets with current value in the middle using:
+     *         left_count * current_count * right_count
+     *    - Accumulate the result and update the left count.
+     * 3. Return the total number of valid triplets.
+     *
+     * This approach avoids O(N^3) brute-force and leverages combinatorial logic.
+     *
+     * Time Complexity: O(N)
+     *    - Single pass to count elements, followed by iteration over unique keys.
+     *
+     * Space Complexity: O(U)
+     *    - Where U is the number of unique elements in the array (for the map).
+     *
+     * @param nums Input array of integers
+     * @return     Total number of unequal triplets with pairwise distinct values
+     */
+    public static int unequalTriplets_advanced(int[] nums) {
+        Map<Integer,Integer> map = new HashMap<>();
+        for(int i = 0; i < nums.length; i++){
+            if(!map.containsKey(nums[i])){
+                map.put(nums[i],1);
+                continue;
+            }
+            map.put(nums[i], map.get(nums[i])+1);
+        }
+        int left = 0;
+        int right = nums.length;
+        int res = 0;
+
+        for(Map.Entry<Integer,Integer> entry : map.entrySet()){
+            right -= entry.getValue();
+            res += left *  entry.getValue() * right;
+            left += entry.getValue();
+         }
+        return res;
     }
 }
 

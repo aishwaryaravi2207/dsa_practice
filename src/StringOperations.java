@@ -126,6 +126,33 @@ public class StringOperations {
         }
         return sum;
     }
+    /**
+     * Leetcode Problem #1869: Longer Contiguous Segments of Ones than Zeros
+     *
+     * Problem Description:
+     * Given a binary string `s`, determine if the longest contiguous segment of 1's
+     * is strictly longer than the longest contiguous segment of 0's.
+     *
+     * Approach:
+     * 1. Initialize counters for tracking current streaks of 0's and 1's.
+     * 2. Initialize variables to keep track of the maximum streaks for both 0's and 1's.
+     * 3. Iterate through each character in the string:
+     *    - If the character is '0', increment the zero counter and reset the one counter.
+     *    - If the character is '1', increment the one counter and reset the zero counter.
+     *    - Update the maximum streak values accordingly.
+     * 4. After processing the string, compare the maximum streaks and return true
+     *    if the maximum number of contiguous 1's is greater than that of 0's.
+     *
+     * Time Complexity: O(N)
+     *    - Single pass through the string of length N.
+     *
+     * Space Complexity: O(1)
+     *    - Constant space usage for counters and result.
+     *
+     * @param s Input binary string
+     * @return  True if the longest contiguous segment of 1's is greater than that of 0's, otherwise false
+     */
+
     public  static boolean checkZeroOnes(String s) {
         int count_zero = 0, count_one = 0, max_zero = 0 , max_one = 0;
         for(int i = 0; i < s.length(); i++){
@@ -140,6 +167,31 @@ public class StringOperations {
         }
         return max_one > max_zero;
     }
+    /**
+     * Leetcode Problem #1556: Thousand Separator
+     *
+     * Problem Description:
+     * Given an integer `n`, return a string representation of the number
+     * with dots ('.') inserted as thousand separators from right to left.
+     *
+     * Approach:
+     * 1. Convert the integer to a string.
+     * 2. Initialize a counter to track every third digit from the right.
+     * 3. Iterate through the string from the end:
+     *    - Append the character to the result.
+     *    - After every third character (except the last group), insert a dot.
+     * 4. Return the final formatted string.
+     *
+     * Time Complexity: O(N)
+     *    - Single pass through the number string of length N.
+     *
+     * Space Complexity: O(N)
+     *    - Uses additional space proportional to the output string.
+     *
+     * @param n Input integer
+     * @return  String representation of the number with thousand separators
+     */
+
     public static String thousandSeparator(int n) {
         String temp = String.valueOf(n);
         String res = "";
@@ -147,6 +199,7 @@ public class StringOperations {
         for(int i = temp.length() - 1; i > 0; i--){
             if(counter % 3 == 0){
                 res = "." +  temp.charAt(i) + res;
+                counter = 1;
                 continue;
             }
             res = temp.charAt(i) + res;
