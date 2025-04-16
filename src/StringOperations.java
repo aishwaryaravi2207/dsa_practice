@@ -1,3 +1,4 @@
+import java.util.List;
 public class StringOperations {
     public static void main(String[] args){
         String s = "AALLPP";
@@ -206,5 +207,88 @@ public class StringOperations {
             counter++;
         }
         return temp.charAt(0) + res;
+    }
+    /**
+     * Leetcode Problem #3248: Snake in Matrix
+     *
+     * This method returns the final position of a snake in a grid after executing a series of movement commands.
+     * The snake starts at the top-left corner (0, 0), and moves based on the directions in the `commands` list.
+     *
+     * Approach:
+     * 1. Initialize two indices `i` and `j` to 0 to represent the snake's current row and column position.
+     * 2. Iterate through each command in the `commands` list:
+     *    - "RIGHT" increments the column (`j++`)
+     *    - "LEFT" decrements the column (`j--`)
+     *    - "DOWN" increments the row (`i++`)
+     *    - "UP" (any other input) decrements the row (`i--`)
+     * 3. After processing all commands, calculate the snake's final linear position using:
+     *    `grid[i][j] = (i * n) + j`, where `n` is the number of columns in the grid.
+     *
+     * Time Complexity: O(k)
+     *    - k is the number of movement commands.
+     *
+     * Space Complexity: O(1)
+     *    - Constant space is used.
+     *
+     * @param n The number of columns in the matrix.
+     * @param commands A list of movement commands (e.g., "UP", "DOWN", "LEFT", "RIGHT").
+     * @return The final position of the snake in linear form based on the grid layout.
+     */
+    public static int finalPositionOfSnake(int n, List<String> commands) {
+        int i = 0, j = 0;
+        for(String temp : commands){
+                if(temp.equalsIgnoreCase("RIGHT")) {
+                    j++;
+                }
+                else if(temp.equalsIgnoreCase("LEFT")) {
+                    j--;
+                }
+                else if(temp.equalsIgnoreCase("DOWN")) {
+                    i++;
+                }
+                else {
+                    i--;
+                }
+            }
+        return (i*n) + j;
+    }
+    /**
+     * Leetcode Problem #1572: Matrix Diagonal Sum
+     *
+     * This method calculates the sum of both the primary and secondary diagonals of a square matrix.
+     * If the matrix has an odd dimension, the center element (which lies on both diagonals) is subtracted once
+     * to avoid double-counting.
+     *
+     * Approach:
+     * 1. Initialize two pointers:
+     *    - `j` starting at 0 to traverse the primary diagonal (top-left to bottom-right).
+     *    - `y` starting at n-1 to traverse the secondary diagonal (top-right to bottom-left).
+     * 2. Loop through each row `i`, and at each step:
+     *    - Add the primary diagonal element `mat[i][j]` and the secondary diagonal element `mat[i][y]` to the sum.
+     *    - Increment `i` and `j`, decrement `y`.
+     * 3. If the matrix has odd length, subtract the center element once since it was added twice.
+     *
+     * Time Complexity: O(n)
+     *    - Single pass through the matrix diagonals.
+     *
+     * Space Complexity: O(1)
+     *    - Only constant space is used.
+     *
+     * @param mat A square 2D integer matrix.
+     * @return The sum of the primary and secondary diagonal elements.
+     */
+    public static int diagonalSum(int[][] mat) {
+        int i = 0;
+        int j = 0;
+        int y = mat.length - 1;
+        int sum = 0;
+        while(i < mat.length){
+            sum += mat[i][j++] + mat[i++][y--];
+        }
+        if(mat.length % 2 != 0){
+            int pos = mat.length/2;
+            sum -= mat[pos][pos];
+        }
+        return sum;
     }
 }
