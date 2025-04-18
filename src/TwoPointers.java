@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
+import java.util.*;
 
 public class TwoPointers {
     public static void main(String args[]){
@@ -47,24 +45,37 @@ public class TwoPointers {
         }
         return res;
     }
-    public static int[] twoSum(int[] numbers, int target) {
-        int i = 0;
-        int j = numbers.length-1;
-        int[] res = new int[2];
-        while(i < j){
-            int sum = numbers[i] + numbers[j];
-            if(sum == target){
-                res[0] = i+1;
-                res[1] = j+1;
-                return res;
+    /**
+     * Leetcode Problem #1: Two Sum
+     *
+     * This method returns the indices of the two numbers in the input array that add up to the target value.
+     *
+     * Approach:
+     * 1. Iterate through the array while maintaining a hashmap of numbers seen so far and their indices.
+     * 2. For each number, calculate the difference between the target and the current number.
+     * 3. If this difference already exists in the map, return the current index and the index of the difference.
+     * 4. Otherwise, store the current number and its index in the map.
+     *
+     * Time Complexity: O(N)
+     *    - The array is traversed once, where N is the number of elements in the array.
+     *
+     * Space Complexity: O(N)
+     *    - In the worst case, all elements are stored in the map.
+     *
+     * @param nums An array of integers.
+     * @param target The target sum to find.
+     * @return An array containing the indices of the two numbers that add up to the target.
+     *         Returns {-1, -1} if no such pair exists.
+     */
+    public static int[] twoSum(int[] nums, int target) {
+        Map<Integer,Integer> map = new HashMap<>();
+        for(int i = 0; i < nums.length; i++){
+            int diff = target - nums[i];
+            if(map.containsKey(diff)){
+                return new int[]{map.get(diff),i};
             }
-            if(sum > target){
-                j--;
-            }
-            else if(sum > target){
-                i++;
-            }
+            map.put(nums[i],i);
         }
-        return res;
+        return new int[] {-1-1};
     }
 }
