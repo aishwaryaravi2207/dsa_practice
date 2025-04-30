@@ -1,10 +1,17 @@
-import java.util.List;
+import java.util.*;
+
 public class StringOperations {
     public static void main(String[] args){
-        String s = "AALLPP";
+//        String s = "AALLPP";
 //        System.out.println(checkRecord(s));
-        String input = "030";
-        System.out.println(digitCount(input));
+//        String input = "030";
+//        System.out.println(digitCount(input));
+        List<List<String>> input = new ArrayList<>();
+
+        input.add(Arrays.asList("gk", "otg", "ia", "otg", "qs", "cwtk"));
+        input.add(Arrays.asList("i", "otg", "otg", "otg", "otg", "otg", "otg"));
+
+        System.out.println(findCommonResponse(input));
     }
     /**
      * Leetcode Problem #551: Student Attendance Record I
@@ -290,5 +297,117 @@ public class StringOperations {
             sum -= mat[pos][pos];
         }
         return sum;
+    }
+    public static String findCommonResponse(List<List<String>> responses) {
+        Map<String,Integer> map = new HashMap<>();
+        for(int i = 0; i < responses.size(); i++){
+            Map<String,Boolean> checker = new HashMap<>();
+            for(int j = 0; j < responses.get(i).size(); j++){
+                String temp = responses.get(i).get(j);
+                System.out.println("temp:"+temp);
+                    if(map.containsKey(temp)){
+                        if(checker.containsKey(temp)) {
+                            System.out.println("incrementing");
+                            map.put(temp, map.get(temp) + 1);
+                        }
+                        continue;
+                    }
+                    else {
+                        System.out.println("adding");
+                        map.put(temp, 1);
+                    }
+                    checker.put(temp,true);
+            }
+        }
+        int max = Integer.MIN_VALUE;
+        for(Map.Entry<String,Integer> entry : map.entrySet()){
+            max = Math.max(max, entry.getValue());
+        }
+        System.out.println("Max="+max);
+        List<String> list = new ArrayList<>();
+        for(Map.Entry<String,Integer> entry : map.entrySet()){
+            if(entry.getValue() == max){
+                list.add(entry.getKey());
+            }
+        }
+        if(list.size() > 1){
+            String temp1 = list.get(0);
+            for(int k = 1; k < list.size(); k++){
+                String temp2 = list.get(k);
+                System.out.println("temp1"+temp1);
+                System.out.println("temp2"+temp2);
+                int x = 0, y = 0;
+                boolean isFound = false;
+                while(x < temp1.length() && y < temp2.length()){
+                    if(temp1.charAt(x) < temp2.charAt(y)){
+                        isFound = true;
+                        break;
+                    }
+                    else if(temp1.charAt(x) > temp2.charAt(y)){
+                        isFound = true;
+                        temp1 = temp2;
+                        break;
+                    }
+                    x++;
+                    y++;
+                }
+                if(!isFound){
+                    temp1 = (temp1.length() > temp2.length())? temp2 : temp1;
+                }
+                System.out.println("temp1"+temp1);
+                System.out.println("temp2"+temp2);
+            }
+            return temp1;
+        }
+        return list.get(0);
+    }
+    public static String mostCommonWord(String paragraph, String[] banned) {
+        String[] words = paragraph.split("[\\s,!?':;]+");
+        int max = Integer.MIN_VALUE;
+        String res = "";
+        Map<String,Integer> map = new HashMap<>();
+        for(String temp : words){
+            temp = temp.toLowerCase();
+            int len = temp.length()-1;
+            if(temp.charAt(len) < 97){
+                temp = temp.substring(0,len);
+            }
+            if(Arrays.asList(banned).indexOf(temp) < 0){
+                if(map.containsKey(temp)){
+                    map.put(temp,map.get(temp) + 1);
+                }
+                else {
+                    map.put(temp,1);
+                }
+                if(map.get(temp) > max){
+                    res = temp;
+                    max = map.get(temp);
+                }
+            }
+        }
+        return res;
+    }
+    public static boolean hasSpecialSubstring(String s, int k) {
+        String temp = "1" + s + "1";
+        for(int i = 0; i < s.length(); i++){
+            int loop = i + k - 1;
+            if(loop >= s.length()){
+                break;
+            }
+            boolean isRecurring = true;
+            while(loop > i){
+                if(s.charAt(i) != s.charAt(loop)){
+                    isRecurring = false;
+                    break;
+                }
+                loop--;
+            }
+            if(isRecurring){
+                if(s.charAt(i) != temp.charAt(i) && s.charAt(i) != temp.charAt(i+k+1)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

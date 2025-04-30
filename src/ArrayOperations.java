@@ -2,38 +2,47 @@ import java.util.*;
 
 public class ArrayOperations {
     public static void main(String[] args){
-        int[] nums = {2,3,1,3,2,4,6,7,9,2,19};
-        int[] input = {2,1,4,3,9,6};
-        int[] nums2 = {6,2};
-        int[] nums3 = {0,1,2,3,4};
-        int[] index = {0,1,2,2,1};
-        int[] num4 = { 40, 30, 20, 10};
-        int[] num5 = {4,5,6,4,4};
-        int[] num6 = {4,3,2,1};
-        int[] num7 = {6,8,4,5,5,7,3};
-        int[] num8 = {46,49,46,47,48,45,44};
-        int[][] mum9 = {{1950,1961},{1960,1971},{1970,1981}};
-        int[] num10 = {-1,1,-6,4,5,-6,1,4,1};
-        int[] num11 = {2,2,2,3,1,1};
-        int[] nums12 = {4,4,2,4,3};
-        System.out.println(unequalTriplets_advanced(nums12));
-        System.out.println(frequencySort_advanced(num11));
-        System.out.println(maximumPopulation(mum9));
-        System.out.println(frequencySort(num10));
-        System.out.println(minimumOperations(num5));
-        for(int temp : createTargetArray(nums3,index)){
-            System.out.println(temp);
-        }
-        System.out.println(runningSum(nums));
-        System.out.println(countHillValley(input));
-        System.out.println(relativeSortArray(nums,input).toString());
-        System.out.println(arrayPairSum(nums2));
-        System.out.println(sortArrayByParity(nums));
-        System.out.println(sortArrayByParityII(num11));
-        System.out.println(repeatedNTimes(nums));
-        System.out.println(arrayRankTransform(num4));
-        System.out.println(transformArray(num6));
-        System.out.println(addedInteger(num7,num8));
+//        int[] nums = {2,3,1,3,2,4,6,7,9,2,19};
+//        int[] input = {2,1,4,3,9,6};
+//        int[] nums2 = {6,2};
+//        int[] nums3 = {0,1,2,3,4};
+//        int[] index = {0,1,2,2,1};
+//        int[] num4 = { 40, 30, 20, 10};
+//        int[] num5 = {4,5,6,4,4};
+//        int[] num6 = {4,3,2,1};
+//        int[] num7 = {6,8,4,5,5,7,3};
+//        int[] num8 = {46,49,46,47,48,45,44};
+//        int[][] mum9 = {{1950,1961},{1960,1971},{1970,1981}};
+//        int[] num10 = {-1,1,-6,4,5,-6,1,4,1};
+//        int[] num11 = {2,2,2,3,1,1};
+//        int[] nums12 = {4,4,2,4,3};
+//        System.out.println(unequalTriplets_advanced(nums12));
+//        System.out.println(frequencySort_advanced(num11));
+//        System.out.println(maximumPopulation(mum9));
+//        System.out.println(frequencySort(num10));
+//        System.out.println(minimumOperations(num5));
+//        for(int temp : createTargetArray(nums3,index)){
+//            System.out.println(temp);
+//        }
+//        System.out.println(runningSum(nums));
+//        System.out.println(countHillValley(input));
+//        System.out.println(relativeSortArray(nums,input).toString());
+//        System.out.println(arrayPairSum(nums2));
+//        System.out.println(sortArrayByParity(nums));
+//        System.out.println(sortArrayByParityII(num11));
+//        System.out.println(repeatedNTimes(nums));
+//        System.out.println(arrayRankTransform(num4));
+//        System.out.println(transformArray(num6));
+//        System.out.println(addedInteger(num7,num8));
+//        int[] num13 = {3,5,12,-1,-3,-5};
+//        String[] temp = {"jump","add","add","jump","jump","jump"};
+//        System.out.println(calculateScore(temp,num13));
+        String s = "acb";
+        String t = "aebdc";
+        System.out.println(isSubsequence(s,t));
+        int[] nums = {0,1,2,6,8,9};
+        System.out.println(summaryRanges(nums));
+
     }
     /**
      * Leetcode Problem #1480: Running Sum of 1D Array
@@ -1066,6 +1075,161 @@ public class ArrayOperations {
             left += entry.getValue();
          }
         return res;
+    }
+    public static long calculateScore(String[] instructions, int[] values) {
+        long score = 0;
+        Map<Integer,Boolean> map = new HashMap<>();
+        for(int i = 0; i < instructions.length; i++){
+            if(!map.containsKey(i)) {
+                System.out.println("instruction[i]"+instructions[i]);
+                if (instructions[i].equalsIgnoreCase("add")){
+                    score += values[i];
+                    map.put(i,true);
+                    continue;
+                }
+                map.put(i,true);
+                i = (i + values[i]) -1;
+                System.out.println("i = " +i);
+            }
+            else{
+                System.out.println("here");
+                break;
+            }
+        }
+        System.out.println("score" +score);
+        return score;
+    }
+    public static int maximumPossibleSize(int[] nums) {
+        int count = 0;
+        int len = nums.length;
+        int max = nums[0];
+        int min = nums[0];
+        for(int i = 1; i < nums.length; i++){
+            if(max == min){
+                if(nums[i] > max) {
+                    max = nums[i];
+                    min = nums[i];
+                }
+                else{
+                    min = nums[i];
+                    count++;
+                }
+            }
+            else{
+                if(min < nums[i]){
+                    if(max < nums[i]){
+                        max = nums[i];
+                        min = nums[i];
+                    }
+                    else{
+                        min = nums[i];
+                        count++;
+                    }
+                }
+                else{
+                    count++;
+                }
+            }
+        }
+        return len-count;
+    }
+    public int[] getFinalState(int[] nums, int k, int multiplier) {
+        while(k > 0){
+            int min = nums[0];
+            int pos = 0;
+            for(int i = 1; i < nums.length; i++){
+                if(min > nums[i]){
+                    min = nums[i];
+                    pos = i;
+                }
+
+            }
+            nums[pos] = nums[pos] * multiplier;
+            k--;
+        }
+        return nums;
+    }
+    public static int[] findThePrefixCommonArray(int[] A, int[] B) {
+        int[] res = new int[A.length];
+        int prev = 0;
+        Map<Integer,Integer> map = new HashMap<>();
+        for(int i = 0; i < A.length; i++){
+            if(A[i] == B[i]){
+                map.put(A[i],2);
+                res[i] = prev + 2;
+            }
+            else {
+                if (map.containsKey(A[i])) {
+                    map.put(A[i], map.get(A[i]) + 1);
+                    res[i] = prev + 2;
+                } else {
+                    map.put(A[i], 1);
+                }
+                if (map.containsKey(B[i])) {
+                    map.put(B[i], map.get(B[i]) + 1);
+                    res[i] = prev + 2;
+                } else {
+                    map.put(B[i], 1);
+                }
+            }
+            res[i] = prev;
+        }
+        return res;
+    }
+    public static boolean isSubsequence(String s, String t){
+        int i = 0;
+        int j = 0;
+        while(i < s.length() && j < t.length()){
+            if(s.charAt(i) == t.charAt(j)){
+                i++;
+                j++;
+                continue;
+            }
+            j++;
+        }
+        if(i == s.length()){
+            return true;
+        }
+        return false;
+    }
+    public static List<String> summaryRanges(int[] nums) {
+        List<String> list = new ArrayList<>();
+        if(nums.length == 0){
+            return list;
+        }
+        String temp = String.valueOf(nums[0]);
+        for(int i = 1; i < nums.length; i++){
+            if(nums[i] != nums[i-1] + 1){
+                if(!temp.equals(String.valueOf(nums[i-1]))) {
+                    temp += "->" + nums[i - 1];
+                }
+                list.add(temp);
+                temp = String.valueOf(nums[i]);
+            }
+            else{
+                if(i == nums.length-1){
+                    temp += "->" + nums[i];
+                    list.add(temp);
+                    temp = "";
+                }
+            }
+        }
+        if(!temp.isEmpty()){
+            list.add(temp);
+        }
+        return list;
+    }
+    public static boolean isBoomerang(int[][] points) {
+        if(points[0][0] != points[1][0] && points[0][1] != points[1][1] ||
+                points[0][0] != points[2][0] && points[0][1] != points[2][1] || points[1][0] != points[2][0] && points[1][1] != points[2][1]){
+            return false;
+        }
+        int x = (points[1][1] - points[0][1]) * (points[2][0] - points[1][0]);
+        int y = (points[2][1] - points[1][1]) * (points[1][0] - points[0][0]);
+        if(x != y){
+            return true;
+        }
+        return false;
     }
 }
 
